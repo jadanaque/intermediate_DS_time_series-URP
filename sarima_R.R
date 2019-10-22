@@ -17,9 +17,9 @@ library(stats)
 Yt<-read.delim("DATAS/datatesisaereo.txt",header=T)
 Yt<-ts(Yt, start=c(2000, 1), freq=12)
 
-date<-seq(as.Date("2000/01/01"),as.Date("2012/12/01"),by="months")
+date <- seq(as.Date("2000/01/01"),as.Date("2012/12/01"),by="months")
 
-data<-data.frame(Yt,date)
+data <- data.frame(Yt, date)
 
 fit <- auto.arima(Yt)
 fit
@@ -36,10 +36,10 @@ fit
 ############
 
 # Plot
-plot(Yt,col="lightblue",
-     main="Grafico de la serie ...",
-     ylab="Viajeros (en miles)",
-     xlab="Tiempo")
+plot(Yt, col="lightblue",
+     main = "Grafico de la serie ...",
+     ylab = "Viajeros (en miles)",
+     xlab = "Tiempo")
 
 
 ##########################
@@ -47,8 +47,8 @@ plot(Yt,col="lightblue",
 ##########################
 
 # Usamos la transformacion de Box-Cox
-lambda<-BoxCox.lambda(Yt,lower=-5,upper=5)
-Yt_t<-BoxCox(Yt,lambda=lambda)
+lambda <- BoxCox.lambda(Yt, lower=-5, upper=5)
+Yt_t <- BoxCox(Yt,lambda=lambda)
 
 
 # Plot
@@ -60,7 +60,7 @@ plot(Yt_t,col="lightblue",
 
 
 # ACF
-acf(Yt_t,lag.max=39,
+acf(Yt_t, lag.max=39,
     xaxp=c(0,16,16),
     main="ACF de la serie ......",
     ylab="Autocorrelaciones",
@@ -87,7 +87,7 @@ pacf(Yt_t,lag.max=39,
 
 # Diferencio la serie 1  vez regularmente
 #Yt_t_1r<-diff(Yt_t,1,1)
-Yt_t_1r<-diff(Yt,1,1)
+Yt_t_1r <- diff(Yt, 1, 1)
 
 # Plot
 plot(Yt_t_1r,
@@ -125,7 +125,7 @@ par(mfrow = c(1, 1))
 ##########################################################################
 
 # Ajustamos un modelo SARIMA(0,1,1)(0,1,1)[12]
-fit<-Arima(Yt,order=c(0,1,1),seasonal=list(order=c(0,1,1),period=12))
+fit<-Arima(Yt, order=c(0,1,1), seasonal=list(order=c(0,1,1),period=12))
 fit
 
 
@@ -159,7 +159,7 @@ Box.test(fit$residuals,lag=1,type="Box-Pierce",fitdf=0)
 
 
 # Serie original, estimacion y pronosticos con ic
-plot(forecast(fit,h=24),col="red")
+plot(forecast(fit, h=24),col="red")
 
 ### PROBAMOS DIFERENTES MODELOS
 # (1,1,1)(1,0,1) Jos?
